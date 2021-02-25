@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from gamma.models import UserDetails
 from django.contrib import messages
+from django.contrib.auth.models import User
+
 
 def Indexpage(request):
     return render(request, 'index.html')
@@ -34,3 +36,8 @@ def logout(request):
     except:
         return render(request,'index.html')
     return render(request,'index.html')
+
+def get_user_profile(request):
+    return render(request, 'user_profile.html',)
+    
+    
