@@ -18,10 +18,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-     path('admin/', admin.site.urls),
-    path('',views.Indexpage),
-    path('Registration',views.Userreg,name="Reg"),
-    path('Login',views.loginpage,name="Loginpage"),
-    path('Logout',views.logout,name="Logout"),
-    path('ViewProfile', views.get_user_profile, name="View Profile"),
+    path('admin/', admin.site.urls),
+    path('', views.index),
+    path('register/', views.register, name="gamma-register"),
+    path('login/', views.login, name="gamma-login"),
+    path('logout/', views.logout, name="gamma-logout"),
+    path('profile/', views.user_profile, name="gamma-profile"),
 ]

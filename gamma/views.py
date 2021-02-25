@@ -3,32 +3,31 @@ from gamma.models import UserDetails
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-
-def Indexpage(request):
+def index(request):
     return render(request, 'index.html')
 
-def Userreg(request):
+def register(request):
     if request.method=='POST':
         username=request.POST['username']
         email=request.POST['email']
         password=request.POST['password']
         study_year=request.POST['study_year']
-        UserDetails(username=username,email=email,password=password,study_year=study_year).save()
-        messages.success(request,'You have successfully registered as '+request.POST['username']+ " !")
-        return render(request,'Registration.html')
+        UserDetails(username=username, email=email, password=password, study_year=study_year).save()
+        messages.success(request,'You have successfully registered as '+request.POST['username']+ "!")
+        return render(request,'register.html')
     else:
-        return render(request,'Registration.html')
+        return render(request,'register.html')
 
-def loginpage(request):
+def login(request):
     if request.method=="POST":
         try:
-            Details=UserDetails.objects.get(email=request.POST['email'],password=request.POST['password'])
+            Details=UserDetails.objects.get(email=request.POST['email'], password=request.POST['password'])
             print("email=", Details)
             request.session['email']=Details.email
             return render(request, 'index.html')
         except UserDetails.DoesNotExist as e:
             messages.success(request, 'Email / Password Invalid..!')
-    return render(request, 'Login.html')
+    return render(request, 'login.html')
 
 def logout(request):
     try:
@@ -37,7 +36,7 @@ def logout(request):
         return render(request,'index.html')
     return render(request,'index.html')
 
-def get_user_profile(request):
+def user_profile(request):
     return render(request, 'user_profile.html',)
     
     
