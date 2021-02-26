@@ -2,21 +2,21 @@ from django.shortcuts import render
 from gamma.models import UserDetails
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .forms import UserRegisterForm
 
 def index(request):
     return render(request, 'gamma/index.html')
 
 def register(request):
     if request.method=='POST':
-        username=request.POST['username']
-        email=request.POST['email']
-        password=request.POST['password']
-        study_year=request.POST['study_year']
-        UserDetails(username=username, email=email, password=password, study_year=study_year).save()
-        messages.success(request,'You have successfully registered as '+request.POST['username']+ "!")
-        return render(request,'register.html')
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'You have successfully registered as {username} !')
     else:
-        return render(request,'gamma/register.html')
+        form = UserRegisterForm()
+    return render(request, 'gamma/register.html', {'form': form})
 
 def login(request):
     if request.method=="POST":
