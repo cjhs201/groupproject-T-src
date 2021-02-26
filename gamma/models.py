@@ -6,4 +6,4 @@ class UserProfile(models.Model):
     study_year = models.IntegerField()
 
     def __str__(self):
-        return f'{self.user.username}\'s Profile'
+        return f'{self.user.username} Profile'
