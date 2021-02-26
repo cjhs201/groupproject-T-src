@@ -1,29 +1,22 @@
-<center>
-    <body text="#ffffff" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF"></body>
+{% load crispy_forms_tags %}
+<body text="#ffffff" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF"></body>
     <body style="background-color:#39603D;"></body>
-    <h1>Login Page</h1>
+    <h1>Enter Your Details</h1>
     <hr/>
     <form method="POST">
         {% csrf_token %}
-    
-    Email
-    <input type="text" placeholder="Enter Email.." name="email" required>
-    
-    <br>
-    <br>
-    
-    Password
-    <input type="password" placeholder="Enter Password.." name="password" required>
-    
-    <br>
-    <br>
-    
-    <button type="submit">Login</button>
+        <fieldset>
+            <legend>Login</legend>
+            {{ form|crispy }}
+            {{ profile_form|crispy }}
+        </fieldset>
+        <button type="submit">Login</button>
     
     {% if messages %}
     {% for msg in messages %}
     <b>{{msg}}</b>
     {% endfor %}
     {% endif %}
-    </center>
+    <hr/>
+    <em>If you don't have an account <a href="{% url 'gamma-register' %}">Register</a></em>
     </form>
