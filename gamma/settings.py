@@ -33,13 +33,14 @@ ALLOWED_HOSTS = ['grouptapptest.herokuapp.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'gamma',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gamma',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,5 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('register/', views.register, name="gamma-register"),
-    path('login/', views.login, name="gamma-login"),
-    path('logout/', views.logout, name="gamma-logout"),
-    path('profile/', views.user_profile, name="gamma-profile"),
+    #path('login/', views.login, name="gamma-login"),
+    #path('logout/', views.logout, name="gamma-logout"),
+    #path('profile/', views.user_profile, name="gamma-profile"),
 ]

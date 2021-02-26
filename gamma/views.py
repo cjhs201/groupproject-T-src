@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from gamma.models import UserDetails
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserProfileForm
 
 def index(request):
     return render(request, 'gamma/index.html')
@@ -10,15 +9,20 @@ def index(request):
 def register(request):
     if request.method=='POST':
         form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
+        profile_form = UserProfileForm(request.POST)
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'You have successfully registered as {username} !')
+            messages.success(request, f'You have successfully registered as {username}!')
     else:
         form = UserRegisterForm()
-    return render(request, 'gamma/register.html', {'form': form})
+        profile_form = UserProfileForm()
+    return render(request, 'gamma/register.html', {'form': form, 'profile_form': profile_form})
 
-def login(request):
+'''def login(request):
     if request.method=="POST":
         try:
             Details=UserDetails.objects.get(email=request.POST['email'], password=request.POST['password'])
@@ -37,6 +41,6 @@ def logout(request):
     return render(request,'index.html')
 
 def user_profile(request):
-    return render(request, 'gamma/user_profile.html',)
+    return render(request, 'gamma/user_profile.html',)'''
     
     

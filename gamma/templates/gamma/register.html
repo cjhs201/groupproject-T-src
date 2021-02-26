@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 <body text="#ffffff" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF"></body>
     <body style="background-color:#39603D;"></body>
     <h1>Enter Your Details</h1>
@@ -6,7 +7,8 @@
         {% csrf_token %}
         <fieldset>
             <legend>Register</legend>
-            {{ form }}
+            {{ form|crispy }}
+            {{ profile_form|crispy }}
         </fieldset>
         <button type="submit">Register</button>
     
@@ -16,5 +18,5 @@
     {% endfor %}
     {% endif %}
     <hr/>
-    <em>If you are already registered <a href="{% url 'gamma-login' %}">Sign In</a></em>
+    <em>If you are already registered <a href="#">Sign In</a></em>
     </form>
