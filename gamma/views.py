@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'gamma/index.html')
 
 def register(request):
     if request.method=='POST':
@@ -16,7 +16,7 @@ def register(request):
         messages.success(request,'You have successfully registered as '+request.POST['username']+ "!")
         return render(request,'register.html')
     else:
-        return render(request,'register.html')
+        return render(request,'gamma/register.html')
 
 def login(request):
     if request.method=="POST":
@@ -27,7 +27,7 @@ def login(request):
             return render(request, 'index.html')
         except UserDetails.DoesNotExist as e:
             messages.success(request, 'Email / Password Invalid..!')
-    return render(request, 'login.html')
+    return render(request, 'gamma/login.html')
 
 def logout(request):
     try:
@@ -37,6 +37,6 @@ def logout(request):
     return render(request,'index.html')
 
 def user_profile(request):
-    return render(request, 'user_profile.html',)
+    return render(request, 'gamma/user_profile.html',)
     
     
