@@ -1,15 +1,17 @@
-<center>
-    <h1>Welcome!!</h1>
-    <body text="#ffffff" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF"></body>
-    <body style="background-color:#39603D;"></body>
+{% extends "gamma/base.html" %}
+{% block content %}
+    <h1>Home</h1>
     <hr/>
-    {% if request.session.email %}
-    {{request.session.email}} &nbsp;&nbsp; <a href="{% url 'gamma-profile' %}">View Profile</a> <a href="{% url 'gamma-logout' %}">Logout</a>
+    {% if user.is_authenticated %}
+    <b>
+        <a href="{% url 'gamma-profile' %}">View Profile</a> |
+        <a href="{% url 'gamma-logout' %}">Logout</a>
+    </b>
     {% else %}
     <b>
-        <a href="{% url 'gamma-register' %}">Register</a> &nbsp;&nbsp; | &nbsp;&nbsp;
+        <a href="{% url 'gamma-register' %}">Register</a> |
         <a href="{% url 'gamma-login' %}">Login</a>
     </b>
     {% endif %}
-    </center>
+{% endblock content %}
     

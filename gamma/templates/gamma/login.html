@@ -1,8 +1,6 @@
+{% extends "gamma/base.html" %}
 {% load crispy_forms_tags %}
-<body text="#ffffff" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF"></body>
-    <body style="background-color:#39603D;"></body>
-    <h1>Enter Your Details</h1>
-    <hr/>
+{% block content %}
     <form method="POST">
         {% csrf_token %}
         <fieldset>
@@ -17,6 +15,6 @@
     <b>{{msg}}</b>
     {% endfor %}
     {% endif %}
-    <hr/>
-    <em>If you don't have an account <a href="{% url 'gamma-register' %}">Register</a></em>
+    <small>Don't have an account? <a href="{% url 'gamma-register' %}">Register</a></small>
     </form>
+{% endblock content %}
