@@ -37,6 +37,8 @@ ul {
 }
 
 .article-title {
+  font-weight: 800;
+  font-size: 200%;
   color: #444444;
 }
 
@@ -45,7 +47,7 @@ a.article-title:hover {
   text-decoration: none;
 }
 
-.article-content {
+.article-description {
   white-space: pre-line;
 }
 

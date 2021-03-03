@@ -2,11 +2,37 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm, UserProfileForm
-from .models import UserProfile
+from .models import UserProfile, Post
 from django.contrib.auth.decorators import login_required
 
+posts = [
+    {
+        'author': 'admin',
+        'title': '5k run',
+        'description': 'Leg still not working',
+        'date_posted': 'March 2nd, 2021',
+        'type': 'Run',
+        'distance': 5,
+        'measurement': 'km',
+        'rating': 4,
+    },
+{
+        'author': 'admin',
+        'title': '30k Cycle',
+        'description': 'To exmouth',
+        'date_posted': 'March 3rd, 2021',
+        'type': 'hiit',
+        'distance': 30,
+        'measurement': 'km',
+        'rating': 8,
+    }
+]
+
 def index(request):
-    return render(request, 'gamma/index.html')
+    context = {
+        'posts': posts #Post.objects.all()
+    }
+    return render(request, 'gamma/index.html', context)
 
 def register(request):
     if request.method=='POST':
