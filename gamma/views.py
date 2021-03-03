@@ -9,7 +9,7 @@ posts = [
     {
         'author': 'admin',
         'title': '5k run',
-        'description': 'Leg still not working',
+        'description': 'Ran down to the quay',
         'date_posted': 'March 2nd, 2021',
         'type': 'Run',
         'distance': 5,
