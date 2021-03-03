@@ -1,17 +1,31 @@
 {% extends "gamma/base.html" %}
 {% block content %}
-    <h1>Home</h1>
-    <hr/>
     {% if user.is_authenticated %}
-    <b>
-        <a href="{% url 'gamma-profile' %}">View Profile</a> |
-        <a href="{% url 'gamma-logout' %}">Logout</a>
-    </b>
+        <h2>My Activities</h2>
+        {% for post in posts %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div style="display:inline-block" class="article-title" >{{ post.title }}</div>
+                <div style="display:inline-block" class="article-type">({{ post.type }})</div>
+                <p class="article-description">{{ post.description }}</p>
+                <p class="article-rating">{{ post.rating }}/10</p>
+                {% if post.type == "Run" or post.type == "Cycle" or post.type == "Swim" %}
+                    <p class="article-distance">{{ post.distance }} {{ post.measurement }}</p>
+                {% else %}
+                {% endif %}
+                <div class="article-metadata">
+                  <a class="mr-2" href="#">{{ post.author }}</a>
+                  <small class="text-muted">{{ post.date_posted }}</small>
+                </div>
+              </div>
+            </article>
+        {% endfor %}
     {% else %}
-    <b>
-        <a href="{% url 'gamma-register' %}">Register</a> |
-        <a href="{% url 'gamma-login' %}">Login</a>
-    </b>
+    <h1>Home</h1>
+        <b>
+            <a href="{% url 'gamma-register' %}">Register</a> |
+            <a href="{% url 'gamma-login' %}">Login</a>
+        </b>
     {% endif %}
 {% endblock content %}
     
