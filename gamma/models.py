@@ -49,7 +49,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
                                                 #and if user is deleted then their post will also be deleted
     def __str__(self):
-
+        return f'{self.user.username} Profile', self.title
+    
     def save(self):
         super().save()
 
