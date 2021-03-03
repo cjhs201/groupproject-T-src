@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from PIL import Image
 
 class UserProfile(models.Model):
     YEAR_CHOICES = (
@@ -10,7 +11,9 @@ class UserProfile(models.Model):
         (4, 4),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     study_year = models.IntegerField(choices = YEAR_CHOICES)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
 class Post(models.Model):
     RATING = (
@@ -46,4 +49,15 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
                                                 #and if user is deleted then their post will also be deleted
     def __str__(self):
+
+    def save(self):
+        super().save()
+
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width >300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
         return f'{self.user.username} Profile', self.title
