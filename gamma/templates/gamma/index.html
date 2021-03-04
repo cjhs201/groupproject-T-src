@@ -1,12 +1,13 @@
 {% extends "gamma/base.html" %}
 {% block content %}
     {% if user.is_authenticated %}
-        <h2>My Activities</h2>
+    <a class="activities-title" >Activities</a>
+    <a class="btn btn-outline-secondary" href="{% url 'post-create' %}">New Activity</a>
         {% for post in posts %}
             <article class="media content-section">
               <div class="media-body">
-                <div style="display:inline-block" class="article-title" >{{ post.title }}</div>
-                <div style="display:inline-block" class="article-type">({{ post.type }})</div>
+                <a class="article-title" href="{% url 'post-detail' post.id %}"><div style="display:inline-block">{{ post.title }}</div></a>
+                <a class="article-type"><div style="display:inline-block">{{ post.type }}</div></a>
                 <p class="article-description">{{ post.description }}</p>
                 <p class="article-rating">{{ post.rating }}/10</p>
                 {% if post.type == "Run" or post.type == "Cycle" or post.type == "Swim" %}

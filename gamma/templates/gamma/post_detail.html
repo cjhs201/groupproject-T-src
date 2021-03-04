@@ -1,0 +1,34 @@
+{% extends "gamma/base.html" %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <article class="media content-section">
+          <div class="media-body">
+            <a class="article-title"><div style="display:inline-block">{{ object.title }}</div></a>
+            <a class="article-type"><div style="display:inline-block">{{ object.type }}</div></a>
+            <p class="article-description">{{ object.description }}</p>
+            <p class="article-rating">{{ object.rating }}/10</p>
+            {% if object.type == "Run" or object.type == "Cycle" or object.type == "Swim" %}
+                <p class="article-distance">{{ object.distance }} {{ object.measurement }}</p>
+            {% else %}
+            {% endif %}
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ object.author }}</a>
+              <small class="text-muted">{{ object.date_posted }}</small>
+              {% if object.author == user %}
+                <div>
+                    <a class="btn btn-secondary btn-sb mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sb mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+    {% else %}
+    <h1>Home</h1>
+        <b>
+            <a href="{% url 'gamma-register' %}">Register</a> |
+            <a href="{% url 'gamma-login' %}">Login</a>
+        </b>
+    {% endif %}
+{% endblock content %}
+    

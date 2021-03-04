@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm
@@ -74,4 +76,45 @@ def editprofile(request):
     }
 
     return render(request, 'gamma/editprofile.html', context)
-    
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'gamma/index.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'gamma/post_detail.html'
+
+class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
+    model = Post
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'rating']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user #Will automatically set the author of the post to the user who is currently logged in
+        return super().form_valid(form) #This would normally be passed anyway but is overwritten by us
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
+    model = Post
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'rating']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self): #tests if user is owner of post
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = '/' #sends user to homepage after deletion
+
+    def test_func(self): #tests if user is owner of post
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
