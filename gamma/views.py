@@ -30,7 +30,7 @@ posts = [
 
 def index(request):
     context = {
-        'posts': posts #Post.objects.all()
+        'posts': Post.objects.all() #Gets all post objects from database
     }
     return render(request, 'gamma/index.html', context)
 
