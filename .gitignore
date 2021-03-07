@@ -140,3 +140,4 @@ cython_debug/
 .idea
 pyvenv.cfg
 Scripts
+bin
