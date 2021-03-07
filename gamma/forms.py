@@ -6,6 +6,12 @@ from .models import UserProfile, Post
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
+    def clean_email(self):
+        e = self.cleaned_data.get("email")
+        if not "exeter.ac.uk" in e:
+            raise forms.ValidationError("You must sign up with an exeter.ac.uk email address.")
+        return e
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -18,6 +24,12 @@ class UserProfileForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
+
+    def clean_email(self):
+        e = self.cleaned_data.get("email")
+        if not "exeter.ac.uk" in e:
+            raise forms.ValidationError("You must sign up with an exeter.ac.uk email address.")
+        return e
 
     class Meta:
         model = User
