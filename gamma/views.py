@@ -89,7 +89,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post
-    fields = ['title', 'type', 'description', 'distance', 'measurement', 'rating']
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'rating', 'header_image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user #Will automatically set the author of the post to the user who is currently logged in
@@ -97,7 +97,7 @@ class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensure
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
     model = Post
-    fields = ['title', 'type', 'description', 'distance', 'measurement', 'rating']
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'rating', 'header_image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

@@ -17,7 +17,10 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='gamma/login.html'), name="gamma-login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='gamma/logout.html'), name="gamma-logout"),
     path('profile/', views.profile, name="gamma-profile"),
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='gamma/password_reset.html'), name="gamma-password_reset"),
     path('editprofile/', views.editprofile, name="gamma-editprofile"),
+    path('password-reset/done', auth_views.PasswordResetDoneView.as_view(template_name='gamma/password_reset_done.html'), name="gamma-password_reset_done"),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='gamma/password_reset_confirm.html'), name="gamma-password_reset_confirm"),
 
 
 ]
