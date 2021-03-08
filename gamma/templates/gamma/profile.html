@@ -1,13 +1,15 @@
-{% extends "gamma/base.html" %}
-{% load crispy_forms_tags %}
-{% block content %}
-    <div class="content-section">
-        <div class="media">
-            <img class="rounded-circle account-img" src="{{ user.userprofile.image.url }}">
-            <div class="media-body">
-                <h2 class="account-heading">{{ user.username }}</h2>
-                <p class="text-secondary">{{ user.email }}</p>
-            </div>
-        </div>
+{% extends "gamma/profile_base.html" %} <!-- This is the template for the profile page of the user who is signed in-->
+{% block info %}
+    <img class="rounded-circle account-img" src="{{ user.userprofile.image.url }}">
+    <div class="media-body">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <p class="text-secondary">{{ user.email }}</p>
     </div>
-{% endblock content %}
+{% endblock info %}
+{% block ifstatement %}
+    {% if user.userprofile.user == user %}
+        <div>
+            <a class="btn btn-secondary btn-sb mt-1 mb-1" href="{% url 'gamma-editprofile' %}">Edit</a>
+        </div>
+    {% endif %}
+{% endblock ifstatement %}
