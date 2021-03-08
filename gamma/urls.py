@@ -20,9 +20,9 @@ urlpatterns = [
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='gamma/password_reset.html'), name="gamma-password_reset"),
     path('profile/<int:pk>/', UserProfileView.as_view(), name="user-profile"),
     path('editprofile/', views.editprofile, name="gamma-editprofile"),
-    #path('leaderboard/', , name="gamma-leaderboard"),
+    path('leaderboard/', views.editprofile, name="gamma-leaderboard"),
     path('password-reset/done', auth_views.PasswordResetDoneView.as_view(template_name='gamma/password_reset_done.html'), name="gamma-password_reset_done"),
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='gamma/password_reset_confirm.html'), name="gamma-password_reset_confirm"),
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#if (settings.DEBUG):
+ #   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
