@@ -29,6 +29,9 @@ class UserProfile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+    def get_absolute_url(self):
+        return reverse('user-profile', kwargs={'pk': self.pk}) #
+
 class Post(models.Model):
     RATING = (
         (1, 1),

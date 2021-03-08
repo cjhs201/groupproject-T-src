@@ -1,0 +1,12 @@
+{% extends "gamma/base.html" %}
+{% load crispy_forms_tags %}<!-- Creating a base to avoid repeated unnecessary code-->
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="content-section">
+            <div class="media">
+                {% block info %}{% endblock %} <!-- This block is used to display profile info-->
+            </div>
+        </div>
+    {% block ifstatement %}{% endblock %} <!-- This block is used to create the if statement that checks whether the a user can edit a profile (only user logged in can)-->
+    {% endif %}
+{% endblock content %}

@@ -56,6 +56,10 @@ def register(request):
 def profile(request):
     return render(request, 'gamma/profile.html')
 
+class UserProfileView(DetailView):
+    model = UserProfile
+    template_name = 'gamma/user_profile.html'
+
 @login_required
 def editprofile(request):
     if request.method=='POST':

@@ -1,0 +1,15 @@
+{% extends "gamma/profile_base.html" %} <!-- This is the template for the profile page of any user (Linked to from Posts)-->
+{% block info %}
+    <img class="rounded-circle account-img" src="{{ object.image.url }}"> <!-- object is userprofile-->
+    <div class="media-body">
+        <h2 class="account-heading">{{ object.user.username }}</h2> <!-- userprofile inherits from user so object.user.username gets the users username-->
+        <p class="text-secondary">{{ object.user.email }}</p>
+    </div>
+{% endblock info %}
+{% block ifstatement %}
+    {% if object.user == user %}
+        <div>
+            <a class="btn btn-secondary btn-sb mt-1 mb-1" href="{% url 'gamma-editprofile' %}">Edit</a>
+        </div>
+    {% endif %}
+{% endblock ifstatement %}
