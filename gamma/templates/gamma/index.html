@@ -15,8 +15,10 @@
                 {% else %}
                 {% endif %}
                 <div class="article-metadata">
-                  <a class="mr-2" href="{% url 'user-profile' post.author.id %}">{{ post.author }}</a>
+                  {% with id=post.author.id|add:"-1" %}
+                  <a class="mr-2" href="{% url 'user-profile' id  %}">{{ post.author }}</a>
                   <small class="text-muted">{{ post.date_posted }}</small>
+                  {% endwith %}
                 </div>
               </div>
             </article>
