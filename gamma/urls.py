@@ -18,6 +18,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='gamma/logout.html'), name="gamma-logout"),
     path('profile/', views.profile, name="gamma-profile"),
     path('editprofile/', views.editprofile, name="gamma-editprofile"),
+    path('leaderboard/', views., name="gamma-leaderboard"),
 
 
 ]
