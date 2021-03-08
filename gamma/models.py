@@ -58,6 +58,7 @@ class Post(models.Model):
         ("m", "m")
     )
     title = models.CharField(max_length=100)
+    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
     type = models.TextField(choices = ACTIVITIES)
     description = models.TextField() #User can provide a custom description of their activity
     distance = models.FloatField()
@@ -71,3 +72,13 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk}) #This will ensure that once a post is created the user will be redirected back to the post created
+
+    def save(self):
+        super().save()
+
+        img = Image.open(self.header_image.path)
+
+        if img.height > 450 or img.width > 450:
+            output_size = (450, 450)
+            img.thumbnail(output_size)
+            img.save(self.header_image.path)

@@ -11,6 +11,11 @@
                 <p class="article-distance">{{ object.distance }} {{ object.measurement }}</p>
             {% else %}
             {% endif %}
+
+            {% if post.header_image %}
+              <img src = "{{ post.header_image.url }}">
+            {% endif %}
+            
             <div class="article-metadata">
               {% with id=post.author.id|add:"-1" %}
               <a class="mr-2" href="{% url 'user-profile' id %}">{{ object.author }}</a>
