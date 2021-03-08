@@ -29,7 +29,6 @@
             <div class="navbar-nav">
               {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'gamma-profile' %}">Profile</a>
-                <a class="nav-item nav-link" href="{% url 'gamma-editprofile' %}">Update Profile</a>
                 {% if user.is_staff %}
                   <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
                 {% endif %}
