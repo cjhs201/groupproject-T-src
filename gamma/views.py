@@ -53,12 +53,20 @@ def register(request):
     return render(request, 'gamma/register.html', {'form': form, 'profile_form': profile_form})
 
 @login_required
-def profile(request):
-    return render(request, 'gamma/profile.html')
+def profile(request): #This is the user's locally viewed profile
+    context = {
+        'posts': Post.objects.all()  # Makes all posts available to the profile page so that a user's activities can be displayed on their profile
+    }
+    return render(request, 'gamma/profile.html', context)
 
-class UserProfileView(DetailView):
+class UserProfileView(DetailView): #This is a profile that can be viewed by anyone
     model = UserProfile
     template_name = 'gamma/user_profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = Post.objects.all()
+        return context
 
 @login_required
 def editprofile(request):
