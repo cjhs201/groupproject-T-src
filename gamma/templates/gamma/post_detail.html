@@ -17,7 +17,7 @@
             {% endif %}
             
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ object.author }}</a>
+              <a class="mr-2" href="{% url 'user-profile' post.author.id %}">{{ object.author }}</a>
               <small class="text-muted">{{ object.date_posted }}</small>
               {% if object.author == user %}
                 <div>
