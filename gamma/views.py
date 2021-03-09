@@ -146,6 +146,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-class Leaderboard():
+class LeaderboardListView(ListView):
     model = Post
-    template_name = 'gamma/leaderboard.html'
+    template_name = 'gamma/leaderboards.html'
+    context_object_name = 'users'
+    ordering = ['-points'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
