@@ -4,15 +4,15 @@
       <thead>
         <tr>
           <th>Pos</th>
-          <th>First Name</th>
-          <th>Last Name</th>
+          <th>User</th>
+          <th>Points</th>
         </tr>
       </thead>
       <tbody>
         {% for user in users %}
         <tr>
           <th scope="row">{{ forloop.counter }}</th>
-          <td>{{ user.user.username }}</td>
+          <td><a href="{% url 'user-profile' user.id %}">{{ user.user.username }}</a></td>
           <td>{{ user.points }}</td>
         </tr>
         {% endfor %}
