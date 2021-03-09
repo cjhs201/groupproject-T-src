@@ -15,6 +15,7 @@ class UserProfile(models.Model):
 
     study_year = models.IntegerField(choices = YEAR_CHOICES)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    points = user.points
 
     def __str__(self):
         return f'{self.user.username} Profile'
