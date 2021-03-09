@@ -9,6 +9,7 @@ User._meta.get_field('email')._unique = True
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
+    # ensure emails end in exeter.ac.uk
     def clean_email(self):
         e = self.cleaned_data.get("email")
         if not "exeter.ac.uk" in e:
@@ -28,6 +29,7 @@ class UserProfileForm(forms.ModelForm):
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
+    # ensure emails end in exeter.ac.uk
     def clean_email(self):
         e = self.cleaned_data.get("email")
         if not "exeter.ac.uk" in e:
