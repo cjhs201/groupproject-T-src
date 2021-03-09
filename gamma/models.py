@@ -87,8 +87,8 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(default=timezone.now)
-    content = models.TextField()
-    rating = models.IntegerField(
+    content = models.TextField(default="")
+    rating = models.IntegerField(default=0,
         choices =  (
             (1, 1),
             (2, 2),

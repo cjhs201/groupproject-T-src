@@ -104,14 +104,15 @@ class PostDetailView(DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-    # def post(self, req, *args, **kwargs):
-    #     form = CommentForm(req.POST)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False)
-    #         comment.author = req.user
-    #         comment.post = self.get_context_data
-    #         comment.save()
-    #         return redirect('gamma-login')
+    def post(self, req, *args, **kwargs):
+     currentpost = self.get_object()
+     form = CommentForm(req.POST)
+     if form.is_valid():
+         comment = form.save(commit=False)
+         comment.author = req.user
+         comment.post = currentpost
+         comment.save()
+         return redirect('gamma-login')
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post
