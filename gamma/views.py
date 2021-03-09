@@ -149,3 +149,13 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class Leaderboard():
     model = Post
     template_name = 'gamma/leaderboard.html'
+
+class PostCompletedView():
+    model = Post
+    success_url = '/' #sends user to homepage after deletion
+    
+    def test_func(self): #tests if user is owner of post
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
