@@ -82,3 +82,8 @@ class Post(models.Model):
             output_size = (450, 450)
             img.thumbnail(output_size)
             img.save(self.header_image.path)
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
