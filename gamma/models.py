@@ -79,7 +79,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now) #get the time/date created
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
                                                 #and if user is deleted then their post will also be deleted
-    points = models.IntegerField(choices = POINTS + "points")
+    points = models.IntegerField(choices = POINTS)
 
 
     def __str__(self):
