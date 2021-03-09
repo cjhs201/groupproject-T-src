@@ -1,11 +1,13 @@
 {% extends "gamma/profile_base.html" %} <!-- This is the template for the profile page of any user (Linked to from Posts)-->
-{% block info %}
-    <img class="rounded-circle account-img" src="{{ object.image.url }}"> <!-- object is userprofile-->
-    <div class="media-body">
-        <h2 class="account-heading">{{ object.user.username }}</h2> <!-- userprofile inherits from user so object.user.username gets the users username-->
-        <p class="text-secondary">{{ object.user.email }}</p>
-    </div>
-{% endblock info %}
+{% block img %}
+    {{ object.user.userprofile.image.url }}
+{% endblock img %}
+{% block user %}
+    {{ object.user.username }}
+{% endblock user %}
+{% block email %}
+    {{ object.user.email }}
+{% endblock email %}
 {% block ifstatement %}
     {% if object.user == user %}
         <div>
@@ -13,3 +15,33 @@
         </div>
     {% endif %}
 {% endblock ifstatement %}
+{% block localname %}
+    {{ object.user.username }}'s
+{% endblock localname %}
+{% block post %}
+    {% for post in posts %}
+        {% if post.author == object.user %} <!-- Only displays posts for that user -->
+            <article class="media content-section">
+              <div class="media-body">
+                <a class="article-title" href="{% url 'post-detail' post.id %}"><div style="display:inline-block">{{ post.title }}</div></a>
+                <a class="article-type"><div style="display:inline-block">{{ post.type }}</div></a>
+                <p class="article-description">{{ post.description }}</p>
+                <p class="article-rating">{{ post.rating }}/10</p>
+                {% if post.type == "Run" or post.type == "Cycle" or post.type == "Swim" %}
+                    <p class="article-distance">{{ post.distance }} {{ post.measurement }}</p>
+                {% else %}
+                {% endif %}
+                {% if post.header_image %}
+                <img src = "{{ post.header_image.url }}">
+              {% endif %}
+                <div class="article-metadata">
+                  {% with id=post.author.id|add:"-1" %}
+                  <a class="mr-2" href="{% url 'user-profile' id  %}">{{ post.author }}</a>
+                  <small class="text-muted">{{ post.date_posted }}</small>
+                  {% endwith %}
+                </div>
+              </div>
+            </article>
+        {% endif %}
+    {% endfor %}
+{% endblock post %}

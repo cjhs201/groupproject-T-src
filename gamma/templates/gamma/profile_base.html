@@ -4,9 +4,15 @@
     {% if user.is_authenticated %}
         <div class="content-section">
             <div class="media">
-                {% block info %}{% endblock %} <!-- This block is used to display profile info-->
+                    <img class="rounded-circle account-img" src="{% block img %}{% endblock %}">
+                    <div class="media-body">
+                        <h2 class="account-heading">{% block user %}{% endblock %}</h2> <!-- This block is used to display profile info-->
+                        <p class="text-secondary">{% block email %}{% endblock %}</p>
+                    </div>
             </div>
+            {% block ifstatement %}{% endblock %} <!-- This block is used to create the if statement that checks whether the a user can edit a profile (only user logged in can)-->
         </div>
-    {% block ifstatement %}{% endblock %} <!-- This block is used to create the if statement that checks whether the a user can edit a profile (only user logged in can)-->
+        <h1 class="font-weight-bolder" style="px:32">{% block localname %}{% endblock %} Activities</h1>
+        {% block post %}{% endblock %}
     {% endif %}
 {% endblock content %}
