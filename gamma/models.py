@@ -79,8 +79,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now) #get the time/date created
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
                                                 #and if user is deleted then their post will also be deleted
-    points = models.IntegerField(choices = POINTS)
-
+    points = models.IntegerField(choices=POINTS, default=0)
 
     def __str__(self):
         return self.title
@@ -102,8 +101,8 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(default=timezone.now)
-    content = models.TextField()
-    rating = models.IntegerField(
+    content = models.TextField(default="")
+    rating = models.IntegerField(default=0,
         choices =  (
             (1, 1),
             (2, 2),
