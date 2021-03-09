@@ -90,3 +90,19 @@ a.article-title:hover {
   top: 1rem;
   right: 2rem;
 }
+
+.comment-section {
+  position: absolute !important;
+  right: -23rem !important;
+  top: 0rem !important;
+  width: 21rem !important;
+}
+
+/*
+.comment-section {
+  position: fixed !important;
+  top: 5rem !important;
+  right: 14rem !important;
+  width: 21rem !important;
+}
+*/
