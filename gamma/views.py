@@ -146,16 +146,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-class Leaderboard():
+class LeaderboardListView(ListView):
     model = Post
-    template_name = 'gamma/leaderboard.html'
-
-class PostCompletedView():
-    model = Post
-    success_url = '/' #sends user to homepage after deletion
-    
-    def test_func(self): #tests if user is owner of post
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
+    template_name = 'gamma/leaderboards.html'
+    context_object_name = 'users'
+    ordering = ['-points'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
