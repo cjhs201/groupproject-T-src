@@ -11,7 +11,7 @@
       <tbody>
         {% for user in users %}
         <tr>
-          <th scope="row">{{ pos }}</th>
+          <th scope="row">{{ forloop.counter }}</th>
           <td>{{ user.user.username }}</td>
           <td>{{ user.points }}</td>
         </tr>
