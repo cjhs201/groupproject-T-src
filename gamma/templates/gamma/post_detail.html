@@ -6,6 +6,7 @@
           <div class="media-body">
             <a class="article-title"><div style="display:inline-block">{{ object.title }}</div></a>
             <a class="article-type"><div style="display:inline-block">{{ object.type }}</div></a>
+            <a class="article-type"><div style="display:inline-block">{{ object.points }}</div></a>
             <p class="article-description">{{ object.description }}</p>
             <p class="article-rating">{{ object.rating }}/10</p>
             {% if object.type == "Run" or object.type == "Cycle" or object.type == "Swim" %}
@@ -26,6 +27,7 @@
                 <div>
                     <a class="btn btn-secondary btn-sb mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
                     <a class="btn btn-danger btn-sb mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    <a class="btn btn-success" href="{% url 'post-completed' object.id %}">Completed</a>
                 </div>
               {% endif %}
             </div>

@@ -145,3 +145,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+class Leaderboard():
+    model = Post
+    template_name = 'gamma/leaderboard.html'
