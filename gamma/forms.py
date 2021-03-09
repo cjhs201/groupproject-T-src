@@ -47,3 +47,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content', 'rating']
+
+class ProfileaddPoints(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['points']

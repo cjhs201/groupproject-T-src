@@ -151,3 +151,8 @@ class LeaderboardListView(ListView):
     template_name = 'gamma/leaderboards.html'
     context_object_name = 'users'
     ordering = ['-points'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
+
+class PostCompletedView():
+    model = Post
+    success_url = '/'
+    points = UserUpdateForm

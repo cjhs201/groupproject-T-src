@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     points = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username}\'s Profile'
 
     def save(self):
         super().save()
@@ -79,11 +79,11 @@ class Post(models.Model):
     rating = models.IntegerField(choices = RATING) #User can give their workout a "rating" of how well they feel it went
     date_posted = models.DateTimeField(default=timezone.now) #get the time/date created
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
-                                                #and if user is deleted then their post will also be deleted
+                                                            #and if user is deleted then their post will also be deleted
     points = models.IntegerField(choices=POINTS, default=0)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} by {self.author.username}"
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk}) #This will ensure that once a post is created the user will be redirected back to the post created
@@ -117,3 +117,6 @@ class Comment(models.Model):
             (10, 10)
         )
     )
+
+    def __str__(self):
+        return f"{self.author}\'s Comment ({self.id}) on Post {self.post.id}"

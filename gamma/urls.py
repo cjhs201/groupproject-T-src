@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserProfileView, LeaderboardListView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserProfileView, LeaderboardListView, PostCompletedView
 from . import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -13,6 +13,7 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name="post-create"),
     path('post/<int:pk>/update', PostUpdateView.as_view(), name="post-update"),
     path('post/<int:pk>/delete', PostDeleteView.as_view(), name="post-delete"),
+    #path('post/<int:pk>/completed', PostCompletedView.as_view(), name="post-completed"),
     path('register/', views.register, name="gamma-register"),
     path('login/', auth_views.LoginView.as_view(template_name='gamma/login.html'), name="gamma-login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='gamma/logout.html'), name="gamma-logout"),
