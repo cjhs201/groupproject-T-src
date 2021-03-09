@@ -144,3 +144,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+class Leaderbaord(): #LoginRequiredMixin ensures that a user has to be logged in to create a post
+    model = Post
+    template_name = 'gamma/leaderbaord.html'
