@@ -155,3 +155,4 @@ class LeaderboardListView(ListView):
 class PostCompletedView():
     model = Post
     success_url = '/'
+    points = UserUpdateForm
