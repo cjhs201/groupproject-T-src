@@ -1,6 +1,5 @@
 body {
-  background: lightblue url("media\images\exeter_bground.png") no-repeat fixed center; 
-  color: #333333;
+  background:url("media\images\exeter_bground.png") no-repeat fixed center;
   margin-top: 5rem;
 }
 
