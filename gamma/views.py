@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from .models import UserProfile, Post
 from django.contrib.auth.decorators import login_required
 
@@ -98,6 +98,20 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'gamma/post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
+    # def post(self, req, *args, **kwargs):
+    #     form = CommentForm(req.POST)
+    #     if form.is_valid():
+    #         comment = form.save(commit=False)
+    #         comment.author = req.user
+    #         comment.post = self.get_context_data
+    #         comment.save()
+    #         return redirect('gamma-login')
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post

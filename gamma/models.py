@@ -82,3 +82,23 @@ class Post(models.Model):
             output_size = (450, 450)
             img.thumbnail(output_size)
             img.save(self.header_image.path)
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
+    content = models.TextField()
+    rating = models.IntegerField(
+        choices =  (
+            (1, 1),
+            (2, 2),
+            (3, 3),
+            (4, 4),
+            (5, 5),
+            (6, 6),
+            (7, 7),
+            (8, 8),
+            (9, 9),
+            (10, 10)
+        )
+    )

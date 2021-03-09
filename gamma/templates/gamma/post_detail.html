@@ -1,4 +1,5 @@
 {% extends "gamma/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
     {% if user.is_authenticated %}
         <article class="media content-section">
@@ -30,6 +31,16 @@
             </div>
           </div>
         </article>
+        <div class="comment-section media content-section">
+          <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Add a Comment</legend>
+                {{ comment_form|crispy }}
+            </fieldset>
+            <button class="btn mb-1" type="submit">Post Comment</button>
+        </form>
+        </div>
     {% else %}
     <h1>Home</h1>
         <b>
