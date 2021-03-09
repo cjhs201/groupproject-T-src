@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile, Post
 
+# make emails unique
+User._meta.get_field('email')._unique = True
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
