@@ -1,20 +1,11 @@
-{% extends "gamma/base.html" %}
-{% load crispy_forms_tags %}
-{% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Register</legend>
-            {{ form|crispy }}
-            {{ profile_form|crispy }}
-        </fieldset>
-        <button type="submit">Register</button>
-    
-    {% if messages %}
-    {% for msg in messages %}
-    <b>{{msg}}</b>
-    {% endfor %}
-    {% endif %}
-    <small>Already have an account? <a href="{% url 'gamma-login' %}">Sign In</a></small>
-    </form>
-{% endblock content %}
+{% extends "gamma/lr_template.html" %}
+{% block title %}
+    <legend>Register</legend>
+{% endblock title %}
+{% block button %}
+    <div><a>I agree to the <a href="{% url 'gamma-register-tc' %}">terms and conditions</a></a></div>
+    <button type="submit">Register</button>
+{% endblock button %}
+{% block acc %}
+    <small>Already have an account? <a href="{% url 'gamma-login' %}">Login</a></small>
+{% endblock acc %}
