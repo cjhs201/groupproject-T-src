@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
@@ -93,7 +94,7 @@ class PostDetailView(DetailView):
          comment.author = req.user
          comment.post = currentpost
          comment.save()
-         return redirect('gamma-login')
+         return HttpResponseRedirect(f"/post/{comment.post.id}")
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post
