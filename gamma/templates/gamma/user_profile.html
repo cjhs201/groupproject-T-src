@@ -9,7 +9,7 @@
     {{ object.user.email }}
 {% endblock email %}
 {% block points %}
-    {{ object.user.userprofile.points }}
+    {{ user.userprofile.points }}
 {% endblock points %}
 {% block ifstatement %}
     {% if object.user == user %}
