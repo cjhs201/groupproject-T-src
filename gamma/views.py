@@ -41,6 +41,8 @@ def index(request):
     }
     return render(request, 'gamma/index.html', context)
 
+#The method that is called when you need to reigeter. It takes a value request and returns the user to login page
+#if created
 def register(request):
     if request.method=='POST':
         form = UserRegisterForm(request.POST)
