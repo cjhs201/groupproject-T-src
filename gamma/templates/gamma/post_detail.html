@@ -27,6 +27,7 @@
               {% if object.author == user %}
                 <div>
                     <a class="btn btn-secondary btn-sb mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                    <a class="btn success btn-sb mt-1 mb-1" href="{% url 'post-completed' object.id %}">Update</a>
                     <a class="btn btn-danger btn-sb mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
                 </div>
               {% endif %}
