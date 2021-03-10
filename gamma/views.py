@@ -7,6 +7,29 @@ from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpd
 from .models import UserProfile, Post
 from django.contrib.auth.decorators import login_required
 
+posts = [
+    {
+        'author': 'admin',
+        'title': '5k run',
+        'description': 'Ran down to the quay',
+        'date_posted': 'March 2nd, 2021',
+        'type': 'Run',
+        'distance': 5,
+        'measurement': 'km',
+        'rating': 4,
+    },
+{
+        'author': 'admin',
+        'title': '30k Cycle',
+        'description': 'To exmouth',
+        'date_posted': 'March 3rd, 2021',
+        'type': 'hiit',
+        'distance': 30,
+        'measurement': 'km',
+        'rating': 8,
+    }
+]
+
 def index(request):
     context = {
         'posts': Post.objects.all() #Gets all post objects from database
@@ -28,9 +51,6 @@ def register(request):
         form = UserRegisterForm()
         profile_form = UserProfileForm()
     return render(request, 'gamma/register.html', {'form': form, 'profile_form': profile_form})
-
-def tc(request):
-    return render(request, 'gamma/tc.html')
 
 @login_required
 def profile(request): #This is the user's locally viewed profile
@@ -100,10 +120,6 @@ class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensure
 
     def form_valid(self, form):
         form.instance.author = self.request.user #Will automatically set the author of the post to the user who is currently logged in
-        profiles = UserProfile.objects.filter(user=self.request.user)
-        for profile in profiles:
-            profile.points += 1
-            profile.save()
         return super().form_valid(form) #This would normally be passed anyway but is overwritten by us
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
