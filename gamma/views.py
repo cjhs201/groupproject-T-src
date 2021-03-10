@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.db.models import Avg
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
@@ -113,12 +114,14 @@ class PostDetailView(DetailView):
          comment = form.save(commit=False)
          comment.author = req.user
          comment.post = currentpost
+         currentpost.rating = Comment.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
          comment.save()
+         currentpost.save()
          return HttpResponseRedirect(f"/post/{comment.post.id}")
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post
-    fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'rating', 'header_image']
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'header_image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user #Will automatically set the author of the post to the user who is currently logged in
