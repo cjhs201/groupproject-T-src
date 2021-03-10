@@ -14,6 +14,7 @@
                 <p class="article-rating">{{ post.rating }}/10</p>
                 {% if post.type == "Run" or post.type == "Cycle" or post.type == "Swim" %}
                     <p class="article-distance">{{ post.distance }} {{ post.measurement }}</p>
+                    <p class="article-time">{{ post.time }}</p>
                 {% else %}
                 {% endif %}
                 {% if post.header_image %}
