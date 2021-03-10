@@ -6,7 +6,7 @@
             <div class="media">
                     <img class="rounded-circle account-img" src="{% block img %}{% endblock %}">
                     <div class="media-body">
-                        <h2 class="account-heading" style="font-size: 100%">{% block user %}{% endblock %}</h2> <!-- This block is used to display profile info-->
+                        <h2 class="account-heading" style="font-size: 100%">{% block user %}{% endblock %} Year:{% block year %}{% endblock %}</h2> <!-- This block is used to display profile info-->
                         <p class="text-secondary">{% block email %}{% endblock %}</p>
                         {% block ifstatement %}{% endblock %} <!-- This block is used to create the if statement that checks whether the a user can edit a profile (only user logged in can)-->
                     </div>

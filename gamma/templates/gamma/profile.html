@@ -1,4 +1,7 @@
 {% extends "gamma/profile_base.html" %} <!-- This is the template for the profile page of the user who is signed in-->
+{% block year %}
+    {{ user.userprofile.study_year }}
+{% endblock year %}
 {% block img %}
     {{ user.userprofile.image.url }}
 {% endblock img %}
