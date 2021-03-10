@@ -8,6 +8,9 @@
 {% block email %}
     {{ user.email }}
 {% endblock email %}
+{% block points %}
+    {{ user.points }}
+{% endblock points %}
 {% block ifstatement %}
     {% if user.userprofile.user == user %}
         <div>
