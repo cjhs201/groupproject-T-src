@@ -9,29 +9,6 @@ from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpd
 from .models import UserProfile, Post, Comment, PostRating
 from django.contrib.auth.decorators import login_required
 
-posts = [
-    {
-        'author': 'admin',
-        'title': '5k run',
-        'description': 'Ran down to the quay',
-        'date_posted': 'March 2nd, 2021',
-        'type': 'Run',
-        'distance': 5,
-        'measurement': 'km',
-        'rating': 4,
-    },
-{
-        'author': 'admin',
-        'title': '30k Cycle',
-        'description': 'To exmouth',
-        'date_posted': 'March 3rd, 2021',
-        'type': 'hiit',
-        'distance': 30,
-        'measurement': 'km',
-        'rating': 8,
-    }
-]
-
 def tc(request):
     return render(request, 'gamma/tc.html')
 
