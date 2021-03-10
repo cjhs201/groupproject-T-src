@@ -138,7 +138,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #User
         post = self.get_object()
         if self.request.user == post.author:
             return True
-        return False
+        return False#
+
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
@@ -155,8 +156,3 @@ class LeaderboardListView(ListView):
     template_name = 'gamma/leaderboards.html'
     context_object_name = 'users'
     ordering = ['-points'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
-
-class PostCompletedView():
-    model = Post
-    success_url = '/'
-    points = UserUpdateForm
