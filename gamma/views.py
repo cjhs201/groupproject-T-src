@@ -80,6 +80,8 @@ class PostListView(ListView):
     ordering = ['-date_posted'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
     paginate_by = 4 # Sorts by 4 posts per page
 
+
+#The view for the Posts showing how they are editted
 class PostDetailView(DetailView):
     model = Post
     template_name = 'gamma/post_detail.html'
