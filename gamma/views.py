@@ -123,6 +123,7 @@ class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensure
         return super().form_valid(form) #This would normally be passed anyway but is overwritten by us
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'rating', 'header_image']
     model = Post
     success_url = '/' #sends user to homepage after deletion
 
@@ -138,7 +139,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #User
         post = self.get_object()
         if self.request.user == post.author:
             return True
-        return False#
+        return False
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
