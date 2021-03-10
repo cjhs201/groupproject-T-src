@@ -13,7 +13,7 @@
 {% endblock points %}
 {% block ifstatement %}
     {% if user.userprofile.user == user %}
-        <p class="btn btn-secondary" href="{% url 'gamma-editprofile' %}">Edit</p>
+        <a class="btn btn-secondary" href="{% url 'gamma-editprofile' %}">Edit</a>
     {% endif %}
 {% endblock ifstatement %}
 {% block localname %}
