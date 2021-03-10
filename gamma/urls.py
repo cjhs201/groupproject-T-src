@@ -15,6 +15,7 @@ urlpatterns = [
     path('post/<int:pk>/delete', PostDeleteView.as_view(), name="post-delete"),
     #path('post/<int:pk>/completed', PostCompletedView.as_view(), name="post-completed"),
     path('register/', views.register, name="gamma-register"),
+    path('register/tc', views.tc, name="gamma-register-tc"),
     path('login/', auth_views.LoginView.as_view(template_name='gamma/login.html'), name="gamma-login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='gamma/logout.html'), name="gamma-logout"),
     path('profile/', views.profile, name="gamma-profile"),
