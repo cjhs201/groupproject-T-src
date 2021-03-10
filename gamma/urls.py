@@ -7,6 +7,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    #These are the urls for the websites
     path('admin/', admin.site.urls),
     path('', PostListView.as_view(), name="index"),
     path('post/<int:pk>/', PostDetailView.as_view(), name="post-detail"), #this is the URL created from a specific post pk=primary key

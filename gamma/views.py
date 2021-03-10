@@ -18,6 +18,8 @@ def index(request):
     }
     return render(request, 'gamma/index.html', context)
 
+#The method that is called when you need to reigeter. It takes a value request and returns the user to login page
+#if created
 def register(request):
     if request.method=='POST':
         form = UserRegisterForm(request.POST)
@@ -76,7 +78,7 @@ class PostListView(ListView):
     template_name = 'gamma/index.html'
     context_object_name = 'posts'
     ordering = ['-date_posted'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
-    paginate_by = 4
+    paginate_by = 4 # Sorts by 4 posts per page
 
 class PostDetailView(DetailView):
     model = Post
@@ -135,7 +137,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #User
         return super().form_valid(form)
 
     def form_updae(self, form, User):
-        User.points += form.points
+        User.points += form.points # adds teh poitns to the users points
         return super().form_valid(form)
 
     def test_func(self): #tests if user is owner of post
@@ -145,7 +147,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #User
         return False
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): #LoginRequiredMixin ensures that a user has to be logged in to delete a post
     model = Post
     success_url = '/' #sends user to homepage after deletion
 
