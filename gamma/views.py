@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm, CommentForm
-from .models import UserProfile, Post, Comment
+from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm, CommentForm, RatePostForm
+from .models import UserProfile, Post, Comment, PostRating
 from django.contrib.auth.decorators import login_required
 
 posts = [
@@ -96,6 +96,7 @@ class PostListView(ListView):
     template_name = 'gamma/index.html'
     context_object_name = 'posts'
     ordering = ['-date_posted'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
+    paginate_by = 4
 
 class PostDetailView(DetailView):
     model = Post
@@ -104,20 +105,37 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
+        context['rating_form'] = RatePostForm()
         context['comments'] = Comment.objects.filter(post=self.get_object())
         return context
 
     def post(self, req, *args, **kwargs):
-     currentpost = self.get_object()
-     form = CommentForm(req.POST)
-     if form.is_valid():
-         comment = form.save(commit=False)
-         comment.author = req.user
-         comment.post = currentpost
-         currentpost.rating = Comment.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
-         comment.save()
-         currentpost.save()
-         return HttpResponseRedirect(f"/post/{comment.post.id}")
+        currentpost = self.get_object()
+        post_author_profile = currentpost.author.userprofile
+        if "submit-comment" in req.POST:
+            form = CommentForm(req.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.author = req.user
+                comment.post = currentpost
+                comment.is_rating = False
+                comment.save()
+        elif "submit-rating" in req.POST:
+            form = RatePostForm(req.POST)
+            if Comment.objects.filter(author=req.user, post=currentpost).first():
+                messages.error(req, "You have already rated this post.")
+            elif form.is_valid():
+                rating = form.save(commit=False)
+                rating.author = req.user
+                rating.post = currentpost
+                rating.save()
+                currentpost.rating = PostRating.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
+                currentpost.save()
+                post_author_profile.points += rating.rating
+                post_author_profile.save()
+                comment = Comment(is_rating=True, content=f"{rating.rating}", author=req.user, post=currentpost)
+                comment.save()
+        return HttpResponseRedirect(f"/post/{currentpost.id}")
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post

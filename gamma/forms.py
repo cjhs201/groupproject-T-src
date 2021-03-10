@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile, Post, Comment
+from .models import UserProfile, Post, Comment, PostRating
 
 # make emails unique
 User._meta.get_field('email')._unique = True
@@ -15,6 +15,7 @@ class UserRegisterForm(UserCreationForm):
         if not "exeter.ac.uk" in e:
             raise forms.ValidationError("You must sign up with an exeter.ac.uk email address.")
         return e
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -46,9 +47,14 @@ class ProfileUpdateForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['content', 'rating']
+        fields = ['content']
 
 class ProfileaddPoints(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['points']
+
+class RatePostForm(forms.ModelForm):
+    class Meta:
+        model = PostRating
+        fields = ['rating']

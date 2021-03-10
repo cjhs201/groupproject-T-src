@@ -99,6 +99,13 @@ a.article-title:hover {
   width: 21rem !important;
 }
 
+.rating-section {
+  position: absolute !important;
+  top: 26rem !important;
+  right: -23rem !important;
+  width: 21rem !important;
+}
+
 /*
 .comment-section {
   position: fixed !important;
