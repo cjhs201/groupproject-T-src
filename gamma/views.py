@@ -122,10 +122,6 @@ class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensure
 
     def form_valid(self, form):
         form.instance.author = self.request.user #Will automatically set the author of the post to the user who is currently logged in
-        profiles = UserProfile.objects.filter(user=self.request.user)
-        for profile in profiles:
-            profile.points += 1
-            profile.save()
         return super().form_valid(form) #This would normally be passed anyway but is overwritten by us
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
