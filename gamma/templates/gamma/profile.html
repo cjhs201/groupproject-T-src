@@ -2,6 +2,9 @@
 {% block year %}
     {{ user.userprofile.study_year }}
 {% endblock year %}
+{% block points %}
+    {{ user.userprofile.points }}
+{% endblock points %}
 {% block img %}
     {{ user.userprofile.image.url }}
 {% endblock img %}
@@ -11,9 +14,6 @@
 {% block email %}
     {{ user.email }}
 {% endblock email %}
-{% block points %}
-    {{ user.userprofile.points }}
-{% endblock points %}
 {% block ifstatement %}
     {% if user.userprofile.user == user %}
         <a class="btn btn-secondary" href="{% url 'gamma-editprofile' %}">Edit</a>
