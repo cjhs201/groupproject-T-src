@@ -10,9 +10,7 @@
 {% endblock email %}
 {% block ifstatement %}
     {% if object.user == user %}
-        <div>
-            <a class="btn btn-secondary btn-sb mt-1 mb-1" href="{% url 'gamma-editprofile' %}">Edit</a>
-        </div>
+        <p class="btn btn-secondary" href="{% url 'gamma-editprofile' %}">Edit</p>
     {% endif %}
 {% endblock ifstatement %}
 {% block localname %}
