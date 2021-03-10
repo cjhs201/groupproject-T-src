@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from PIL import Image
+import datetime
 
 class UserProfile(models.Model):
     YEAR_CHOICES = (
@@ -75,6 +76,7 @@ class Post(models.Model):
     type = models.TextField(choices = ACTIVITIES)
     description = models.TextField() #User can provide a custom description of their activity
     distance = models.FloatField()
+    time = models.DurationField() #Users can enter a period of time for how long their activity took
     measurement = models.TextField(choices = MKM) #user will be able to enter a distance and choose whether it is saved as miles or kilometers
     rating = models.IntegerField(choices = RATING) #User can give their workout a "rating" of how well they feel it went
     date_posted = models.DateTimeField(default=timezone.now) #get the time/date created

@@ -11,6 +11,7 @@
             <p class="article-rating">{{ object.rating }}/10</p>
             {% if object.type == "Run" or object.type == "Cycle" or object.type == "Swim" %}
                 <p class="article-distance">{{ object.distance }} {{ object.measurement }}</p>
+                <p class="article-time">{{ object.time }}</p>
             {% else %}
             {% endif %}
 
