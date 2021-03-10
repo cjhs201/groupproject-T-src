@@ -34,18 +34,30 @@
           </div>
         </article>
         {% for comment in comments %}
-          <article class="media content-section">
-            <div class="media-body">
-              <p class="article-description">{{ comment.content }}</p>
-              <p class="article-rating">{{ comment.rating }}/10</p>
-              <div class="article-metadata">
+          {% if comment.is_rating %}
+            <article class="media content-section">
+              <div class="media-body">
                 {% with id=comment.author.id|add:"-1" %}
-                  <a class="mr-2" href="{% url 'user-profile' id %}">{{ comment.author }}</a>
-                  <small class="text-muted">{{ object.date_posted }}</small>
+                  <p class="article-description"><a href="{% url 'user-profile' id %}">{{ comment.author }}</a> gave a rating of {{ comment.content }}/10.</p>
                 {% endwith %}
+                <div class="article-metadata">
+                  <small class="text-muted">{{ object.date_posted }}</small>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          {% else %}
+            <article class="media content-section">
+              <div class="media-body">
+                <p class="article-description">{{ comment.content }}</p>
+                <div class="article-metadata">
+                  {% with id=comment.author.id|add:"-1" %}
+                    <a class="mr-2" href="{% url 'user-profile' id %}">{{ comment.author }}</a>
+                    <small class="text-muted">{{ object.date_posted }}</small>
+                  {% endwith %}
+                </div>
+              </div>
+            </article>
+          {% endif %}
         {% endfor %}
         <div class="comment-section media content-section">
           <form method="POST">
@@ -54,7 +66,17 @@
                 <legend>Add a Comment</legend>
                 {{ comment_form|crispy }}
             </fieldset>
-            <button class="btn mb-1" type="submit">Post Comment</button>
+            <button class="btn mb-1" type="submit" name="submit-comment">Post Comment</button>
+        </form>
+        </div>
+        <div class="rating-section media content-section">
+          <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Give a Rating</legend>
+                {{ rating_form|crispy }}
+            </fieldset>
+            <button class="btn mb-1" type="submit" name="submit-rating">Rate Post</button>
         </form>
         </div>
     {% else %}

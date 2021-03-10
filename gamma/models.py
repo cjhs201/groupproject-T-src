@@ -94,8 +94,17 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(default=timezone.now)
     content = models.TextField(default="")
+    is_rating = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.author}\'s Comment ({self.id}) on Post {self.post.id}"
+
+class PostRating(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0,
         choices =  (
+            (0, 0),
             (1, 1),
             (2, 2),
             (3, 3),
@@ -108,6 +117,3 @@ class Comment(models.Model):
             (10, 10)
         )
     )
-
-    def __str__(self):
-        return f"{self.author}\'s Comment ({self.id}) on Post {self.post.id}"
