@@ -36,18 +36,6 @@ class UserProfile(models.Model):
         return reverse('user-profile', kwargs={'pk': self.pk}) #
 
 class Post(models.Model):
-    RATING = (
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
-        (6, 6),
-        (7, 7),
-        (8, 8),
-        (9, 9),
-        (10, 10),
-    )
     POINTS = (
         (10, 10),
         (20, 20),
@@ -79,7 +67,7 @@ class Post(models.Model):
     distance = models.FloatField()
     time = models.DurationField() #Users can enter a period of time for how long their activity took
     measurement = models.TextField(choices = MKM) #user will be able to enter a distance and choose whether it is saved as miles or kilometers
-    rating = models.IntegerField(choices = RATING) #User can give their workout a "rating" of how well they feel it went
+    rating = models.IntegerField(default=0) #User can give their workout a "rating" of how well they feel it went
     date_posted = models.DateTimeField(default=timezone.now) #get the time/date created
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
                                                             #and if user is deleted then their post will also be deleted

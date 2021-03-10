@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.db.models import Avg
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm, CommentForm
-from .models import UserProfile, Post
+from .models import UserProfile, Post, Comment
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -82,6 +84,7 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
+        context['comments'] = Comment.objects.filter(post=self.get_object())
         return context
 
     def post(self, req, *args, **kwargs):
@@ -91,12 +94,14 @@ class PostDetailView(DetailView):
          comment = form.save(commit=False)
          comment.author = req.user
          comment.post = currentpost
+         currentpost.rating = Comment.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
          comment.save()
-         return redirect('gamma-login')
+         currentpost.save()
+         return HttpResponseRedirect(f"/post/{comment.post.id}")
 
 class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensures that a user has to be logged in to create a post
     model = Post
-    fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'rating', 'header_image']
+    fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'header_image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user #Will automatically set the author of the post to the user who is currently logged in
@@ -107,11 +112,16 @@ class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensure
         return super().form_valid(form) #This would normally be passed anyway but is overwritten by us
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
-    model = Post
     fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'rating', 'header_image']
+    model = Post
+    success_url = '/' #sends user to homepage after deletion
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def form_updae(self, form, User):
+        User.points += form.points
         return super().form_valid(form)
 
     def test_func(self): #tests if user is owner of post
@@ -119,6 +129,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #User
         if self.request.user == post.author:
             return True
         return False
+
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
@@ -135,8 +146,3 @@ class LeaderboardListView(ListView):
     template_name = 'gamma/leaderboards.html'
     context_object_name = 'users'
     ordering = ['-points'] #-date_posted sorts posts from newest to oldest instead of oldest to newest
-
-class PostCompletedView():
-    model = Post
-    success_url = '/'
-    points = UserUpdateForm

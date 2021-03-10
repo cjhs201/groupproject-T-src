@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserProfileView, LeaderboardListView, PostCompletedView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserProfileView, LeaderboardListView #PostCompletedView
 from . import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
