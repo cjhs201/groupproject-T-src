@@ -124,10 +124,14 @@ class PostCreateView(LoginRequiredMixin, CreateView): #LoginRequiredMixin ensure
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #UserPassesTestMixin is used to check if user updating a post is the owner of that post
     model = Post
-    fields = ['title', 'type', 'description', 'distance', 'measurement', 'time', 'rating', 'header_image']
+    success_url = '/' #sends user to homepage after deletion
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def form_updae(self, form, User):
+        User.points += form.points
         return super().form_valid(form)
 
     def test_func(self): #tests if user is owner of post
