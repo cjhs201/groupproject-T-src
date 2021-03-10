@@ -15,7 +15,6 @@ class UserRegisterForm(UserCreationForm):
         if not "exeter.ac.uk" in e:
             raise forms.ValidationError("You must sign up with an exeter.ac.uk email address.")
         return e
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -23,8 +22,7 @@ class UserRegisterForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['study_year']
-
+        fields = ['study_year', 'tc']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()

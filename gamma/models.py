@@ -17,6 +17,7 @@ class UserProfile(models.Model):
     study_year = models.IntegerField(choices = YEAR_CHOICES)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     points = models.IntegerField(default=0)
+    tc = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username}\'s Profile'
@@ -72,7 +73,7 @@ class Post(models.Model):
         ("m", "m")
     )
     title = models.CharField(max_length=100)
-    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
+    header_image = models.ImageField(default='whiteplaceholder.jpg', upload_to="images/")
     type = models.TextField(choices = ACTIVITIES)
     description = models.TextField() #User can provide a custom description of their activity
     distance = models.FloatField()
