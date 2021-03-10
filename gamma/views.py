@@ -32,6 +32,9 @@ posts = [
     }
 ]
 
+def tc(request):
+    return render(request, 'gamma/tc.html')
+
 def index(request):
     context = {
         'posts': Post.objects.all() #Gets all post objects from database
