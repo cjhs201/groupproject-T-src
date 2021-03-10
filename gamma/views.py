@@ -107,9 +107,10 @@ class PostDetailView(DetailView):
                 rating = form.save(commit=False)
                 rating.author = req.user
                 rating.post = currentpost
-                currentpost.rating = PostRating.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
-                post_author_profile.points += rating.rating
                 rating.save()
+                currentpost.rating = PostRating.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
+                currentpost.save()
+                post_author_profile.points += rating.rating
                 post_author_profile.save()
                 comment = Comment(is_rating=True, content=f"{rating.rating}", author=req.user, post=currentpost)
                 comment.save()
