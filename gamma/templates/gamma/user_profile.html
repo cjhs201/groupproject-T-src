@@ -8,6 +8,9 @@
 {% block email %}
     {{ object.user.email }}
 {% endblock email %}
+{% block points %}
+    {{ user.userprofile.points }}
+{% endblock points %}
 {% block ifstatement %}
     {% if object.user == user %}
         <p class="btn btn-secondary" href="{% url 'gamma-editprofile' %}">Edit</p>

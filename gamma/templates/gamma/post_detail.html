@@ -76,6 +76,9 @@
                 <legend>Give a Rating</legend>
                 {{ rating_form|crispy }}
             </fieldset>
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
             <button class="btn mb-1" type="submit" name="submit-rating">Rate Post</button>
         </form>
         </div>
