@@ -5,13 +5,23 @@
         <article class="media content-section">
           <div class="media-body">
             <a class="article-title"><div style="display:inline-block">{{ object.title }}</div></a>
-            <a class="article-type"><div style="display:inline-block">{{ object.type }}</div></a>
-            <a class="article-type"><div style="display:inline-block">{{ object.points }}</div></a>
+            <a class="article-type"><div style="display:inline-block">
+                    {% if post.type == "Run" %}
+                        &#127939;
+                    {% elif post.type == "Swim" %}
+                        &#127946;
+                    {% elif post.type == "Cycle" %}
+                        &#128692;
+                    {% elif post.type == "Weight Training" %}
+                        &#127947;
+                    {% elif post.type == "HIIT" %}
+                        &#129336;
+                    {% endif %}
+                </div><div style="display:inline-block"><b style='color:#50c878 !important;'>{{ object.rating }}/10</b></div></a>
             <p class="article-description">{{ object.description }}</p>
-            <p class="article-rating">{{ object.rating }}/10</p>
             {% if object.type == "Run" or object.type == "Cycle" or object.type == "Swim" %}
-                <p class="article-distance">{{ object.distance }} {{ object.measurement }}</p>
-                <p class="article-time">{{ object.time }}</p>
+                <p class="article-distance"><b>Distance: </b>{{ object.distance }} {{ object.measurement }}</p>
+                <p class="article-time"><b>Time: </b>{{ object.time }}</p>
             {% else %}
             {% endif %}
 

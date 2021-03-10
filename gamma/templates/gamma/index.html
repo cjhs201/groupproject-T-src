@@ -9,12 +9,23 @@
             <article class="media content-section">
               <div class="media-body">
                 <a class="article-title" href="{% url 'post-detail' post.id %}"><div style="display:inline-block">{{ post.title }}</div></a>
-                <a class="article-type"><div style="display:inline-block">{{ post.type }}</div></a>
+                <a class="article-type"><div style="display:inline-block">
+                    {% if post.type == "Run" %}
+                        &#127939;
+                    {% elif post.type == "Swim" %}
+                        &#127946;
+                    {% elif post.type == "Cycle" %}
+                        &#128692;
+                    {% elif post.type == "Weight Training" %}
+                        &#127947;
+                    {% elif post.type == "HIIT" %}
+                        &#129336;
+                    {% endif %}
+                </div><div style="display:inline-block"><b style='color:#50c878 !important;'>{{ post.rating }}/10</b></div></a>
                 <p class="article-description">{{ post.description }}</p>
-                <p class="article-rating">{{ post.rating }}/10</p>
                 {% if post.type == "Run" or post.type == "Cycle" or post.type == "Swim" %}
-                    <p class="article-distance">{{ post.distance }} {{ post.measurement }}</p>
-                    <p class="article-time">{{ post.time }}</p>
+                    <p class="article-distance"><b>Distance: </b>{{ post.distance }} {{ post.measurement }}</p>
+                    <p class="article-time"><b>Time: </b>{{ post.time }}</p>
                 {% else %}
                 {% endif %}
                 {% if post.header_image %}
