@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpdateForm, CommentForm
-from .models import UserProfile, Post
+from .models import UserProfile, Post, Comment
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -82,6 +82,7 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
+        context['comments'] = Comment.objects.filter(post=self.get_object())
         return context
 
     def post(self, req, *args, **kwargs):

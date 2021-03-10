@@ -33,6 +33,20 @@
             </div>
           </div>
         </article>
+        {% for comment in comments %}
+          <article class="media content-section">
+            <div class="media-body">
+              <p class="article-description">{{ comment.content }}</p>
+              <p class="article-rating">{{ comment.rating }}/10</p>
+              <div class="article-metadata">
+                {% with id=comment.author.id|add:"-1" %}
+                  <a class="mr-2" href="{% url 'user-profile' id %}">{{ comment.author }}</a>
+                  <small class="text-muted">{{ object.date_posted }}</small>
+                {% endwith %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
         <div class="comment-section media content-section">
           <form method="POST">
             {% csrf_token %}
