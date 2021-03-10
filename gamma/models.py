@@ -36,18 +36,6 @@ class UserProfile(models.Model):
         return reverse('user-profile', kwargs={'pk': self.pk}) #
 
 class Post(models.Model):
-    POINTS = (
-        (10, 10),
-        (20, 20),
-        (30, 30),
-        (40, 40),
-        (50, 50),
-        (60, 60),
-        (70, 70),
-        (80, 80),
-        (90, 90),
-        (100, 100),
-    )
     ACTIVITIES = ( #The various activities that a user can choose from when making a post
         ("Run", "Run"),
         ("Cycle", "Cycle"),
@@ -64,14 +52,13 @@ class Post(models.Model):
     header_image = models.ImageField(default='whiteplaceholder.jpg', upload_to="images/")
     type = models.TextField(choices = ACTIVITIES)
     description = models.TextField() #User can provide a custom description of their activity
-    distance = models.FloatField()
+    distance = models.FloatField() #User can provede a custom distance of their activity
     time = models.DurationField() #Users can enter a period of time for how long their activity took
     measurement = models.TextField(choices = MKM) #user will be able to enter a distance and choose whether it is saved as miles or kilometers
     rating = models.IntegerField(default=0) #User can give their workout a "rating" of how well they feel it went
     date_posted = models.DateTimeField(default=timezone.now) #get the time/date created
     author = models.ForeignKey(User, on_delete=models.CASCADE) #This is important because it uses a foreign key to ensure that the post belongs to a user
                                                             #and if user is deleted then their post will also be deleted
-    points = models.IntegerField(choices=POINTS, default=0)
 
     def __str__(self):
         return f"{self.title} by {self.author.username}"
