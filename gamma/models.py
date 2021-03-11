@@ -76,8 +76,8 @@ class Post(models.Model):
         # resizing images that are uploaded as a profile picture for better performance of webapp
         img = Image.open(self.header_image.path)
 
-        if img.height > 450 or img.width > 450:
-            output_size = (450, 450)
+        if img.height > 250 or img.width > 250:
+            output_size = (250, 250)
             img.thumbnail(output_size)
             img.save(self.header_image.path)
 
