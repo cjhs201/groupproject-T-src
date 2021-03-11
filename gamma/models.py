@@ -29,8 +29,8 @@ class UserProfile(models.Model):
         # resizing images that are uploaded as a profile picture for better performance of webapp
         img = Image.open(self.image.path)
 
-        if img.height > 200 or img.width > 200:
-            output_size = (200, 200)
+        if img.height > 100 or img.width > 100:
+            output_size = (100, 100)
             img.thumbnail(output_size)
             img.save(self.image.path)
 
