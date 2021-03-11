@@ -111,7 +111,7 @@ class PostDetailView(DetailView):
                 comment.save()
         elif "submit-rating" in req.POST:
             form = RatePostForm(req.POST)
-            if Comment.objects.filter(author=req.user, post=currentpost).first(): #only allows to rate each post once
+            if Comment.objects.filter(author=req.user, post=currentpost, is_rating=True).first(): #only allows to rate each post once
                 messages.error(req, "You have already rated this post.")
             elif form.is_valid():
                 rating = form.save(commit=False)
