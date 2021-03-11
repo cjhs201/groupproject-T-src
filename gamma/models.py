@@ -5,6 +5,7 @@ from django.urls import reverse
 from PIL import Image
 import datetime
 
+# user profile model with all the required fields
 class UserProfile(models.Model):
     YEAR_CHOICES = (
         (1, 1),
@@ -14,9 +15,9 @@ class UserProfile(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    study_year = models.IntegerField(choices = YEAR_CHOICES)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    points = models.IntegerField(default=0)
+    study_year = models.IntegerField(choices = YEAR_CHOICES) # the year of study the user is currently in 
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics') # profile picture
+    points = models.IntegerField(default=0) #total points of user
     tc = models.BooleanField()
 
     def __str__(self):
@@ -25,6 +26,7 @@ class UserProfile(models.Model):
     def save(self):
         super().save()
 
+        # resizing images that are uploaded as a profile picture for better performance of webapp
         img = Image.open(self.image.path)
 
         if img.height > 200 or img.width > 200:
@@ -35,6 +37,8 @@ class UserProfile(models.Model):
     def get_absolute_url(self):
         return reverse('user-profile', kwargs={'pk': self.pk}) #
 
+
+# model of posts with all required fields
 class Post(models.Model):
     ACTIVITIES = ( #The various activities that a user can choose from when making a post
         ("Run", "Run"),
@@ -52,7 +56,7 @@ class Post(models.Model):
     header_image = models.ImageField(default='whiteplaceholder.jpg', upload_to="images/")
     type = models.TextField(choices = ACTIVITIES)
     description = models.TextField() #User can provide a custom description of their activity
-    distance = models.FloatField() #User can provede a custom distance of their activity
+    distance = models.FloatField() #User can provide a custom distance of their activity
     time = models.DurationField() #Users can enter a period of time for how long their activity took
     measurement = models.TextField(choices = MKM) #user will be able to enter a distance and choose whether it is saved as miles or kilometers
     rating = models.IntegerField(default=0) #User can give their workout a "rating" of how well they feel it went
@@ -69,6 +73,7 @@ class Post(models.Model):
     def save(self):
         super().save()
 
+        # resizing images that are uploaded as a profile picture for better performance of webapp
         img = Image.open(self.header_image.path)
 
         if img.height > 450 or img.width > 450:
@@ -76,20 +81,24 @@ class Post(models.Model):
             img.thumbnail(output_size)
             img.save(self.header_image.path)
 
+
+# model for comments
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    date_posted = models.DateTimeField(default=timezone.now)
-    content = models.TextField(default="")
-    is_rating = models.BooleanField(default=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE) # comment will include its author
+    post = models.ForeignKey(Post, on_delete=models.CASCADE) # comment will show at the post that was commented on
+    date_posted = models.DateTimeField(default=timezone.now) # comment will include date posted
+    content = models.TextField(default="") # comment will include the content entered by the user
+    is_rating = models.BooleanField(default=False) # adding a comment will not add points to the post's author
 
     def __str__(self):
         return f"{self.author}\'s Comment ({self.id}) on Post {self.post.id}"
 
+
+# model for rating a post
 class PostRating(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0,
+    author = models.ForeignKey(User, on_delete=models.CASCADE) # rating will include its author
+    post = models.ForeignKey(Post, on_delete=models.CASCADE) # rating will show at the post that was rated
+    rating = models.IntegerField(default=0,  # the choices that can be chosen for a rating
         choices =  (
             (0, 0),
             (1, 1),

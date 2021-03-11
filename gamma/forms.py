@@ -6,6 +6,8 @@ from .models import UserProfile, Post, Comment, PostRating
 # make emails unique
 User._meta.get_field('email')._unique = True
 
+
+# registration form
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
@@ -25,6 +27,8 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['study_year', 'tc']
 
+
+# edit user form
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
@@ -39,21 +43,29 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
 
+
+# form for changing the profile picture
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['image']
 
+
+# form for adding a comment to a post
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
 
+
+# form for showing a user's total points in their profile
 class ProfileaddPoints(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['points']
 
+
+# form for rating the posts
 class RatePostForm(forms.ModelForm):
     class Meta:
         model = PostRating

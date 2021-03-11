@@ -9,6 +9,8 @@ from .forms import UserRegisterForm, UserProfileForm, UserUpdateForm, ProfileUpd
 from .models import UserProfile, Post, Comment, PostRating
 from django.contrib.auth.decorators import login_required
 
+
+# terms and conditions
 def tc(request):
     return render(request, 'gamma/tc.html')
 
@@ -18,7 +20,7 @@ def index(request):
     }
     return render(request, 'gamma/index.html', context)
 
-#The method that is called when you need to reigeter. It takes a value request and returns the user to login page
+#The method that is called when you need to register. It takes a value request and returns the user to login page
 #if created
 def register(request):
     if request.method=='POST':
@@ -49,11 +51,13 @@ class UserProfileView(DetailView): #This is a profile that can be viewed by anyo
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.all()
+        context['posts'] = Post.objects.all()  # show all a user's activities on their profile page
         return context
 
+# method called when a user wants to edit their profile
+# will update both the profile and user details
 @login_required
-def editprofile(request):
+def editprofile(request):  
     if request.method=='POST':
         u_form = UserUpdateForm(request.POST, instance = request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance = request.user.userprofile)
@@ -81,7 +85,7 @@ class PostListView(ListView):
     paginate_by = 4 # Sorts by 4 posts per page
 
 
-#The view for the Posts showing how they are editted
+#The view for the Posts showing how they are edited
 class PostDetailView(DetailView):
     model = Post
     template_name = 'gamma/post_detail.html'
@@ -93,10 +97,11 @@ class PostDetailView(DetailView):
         context['comments'] = Comment.objects.filter(post=self.get_object())
         return context
 
+    
     def post(self, req, *args, **kwargs):
         currentpost = self.get_object()
         post_author_profile = currentpost.author.userprofile
-        if "submit-comment" in req.POST:
+        if "submit-comment" in req.POST: # for posting a comment to a post
             form = CommentForm(req.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
@@ -106,7 +111,7 @@ class PostDetailView(DetailView):
                 comment.save()
         elif "submit-rating" in req.POST:
             form = RatePostForm(req.POST)
-            if Comment.objects.filter(author=req.user, post=currentpost).first():
+            if Comment.objects.filter(author=req.user, post=currentpost).first(): #only allows to rate each post once
                 messages.error(req, "You have already rated this post.")
             elif form.is_valid():
                 rating = form.save(commit=False)
@@ -115,7 +120,7 @@ class PostDetailView(DetailView):
                 rating.save()
                 currentpost.rating = PostRating.objects.filter(post=self.get_object()).aggregate(Avg('rating'))['rating__avg']
                 currentpost.save()
-                post_author_profile.points += rating.rating
+                post_author_profile.points += rating.rating # adds rating to points of user that created the post
                 post_author_profile.save()
                 comment = Comment(is_rating=True, content=f"{rating.rating}", author=req.user, post=currentpost)
                 comment.save()
@@ -139,10 +144,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #User
         return super().form_valid(form)
 
     def form_updae(self, form, User):
-        User.points += form.points # adds teh poitns to the users points
+        User.points += form.points # adds the points to the user's points
         return super().form_valid(form)
 
-    def test_func(self): #tests if user is owner of post
+    def test_func(self): # tests if user is owner of post
         post = self.get_object()
         if self.request.user == post.author:
             return True
