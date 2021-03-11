@@ -94,7 +94,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         context['rating_form'] = RatePostForm()
-        context['comments'] = Comment.objects.filter(post=self.get_object())
+        context['comments'] = Comment.objects.filter(post=self.get_object()).order_by("-date_posted")
         return context
 
     
